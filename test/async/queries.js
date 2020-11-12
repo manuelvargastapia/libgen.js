@@ -194,5 +194,33 @@ describe("async queries", () => {
         assert(false)
       }
     })
+
+    it("should return one JSON object containing only specified fields", async () => {
+      const optionsForArrayCase = {
+        mirror: mirror,
+        query: "math",
+        count: 1,
+        fields: ['title', 'author', 'year', 'md5']
+      }
+
+      const optionsForStringCase = {
+        mirror: mirror,
+        query: "math",
+        count: 1,
+        fields: "title,author,year,md5"
+      }
+
+      try {
+        const data1 = await search(optionsForArrayCase)
+        const keys1 = Object.keys(data1[0]);
+        assert.strictEqual(keys1.toString(), optionsForArrayCase.fields.toString())
+
+        const data2 = await search(optionsForStringCase)
+        const keys2 = Object.keys(data2[0]);
+        assert.strictEqual(keys2.toString(), optionsForStringCase.fields)
+      } catch (error) {
+        assert(false)
+      }
+    })
   })
 })
