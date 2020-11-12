@@ -5,7 +5,7 @@ const libgen = require("../index.js");
     mirror: "http://libgen.is",
     query: "modal logic",
     count: 5,
-    fields: "title,author,md5"
+    fields: "title,author,md5" // could also be ["title", "author", "md5"]
   };
 
   try {
