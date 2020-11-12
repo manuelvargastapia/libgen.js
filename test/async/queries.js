@@ -222,5 +222,69 @@ describe("async queries", () => {
         assert(false)
       }
     })
+
+    it('should return exactly the same 10 JSON objects either by using queries or ids', async () => {
+      const optionsForQueryCase = {
+        mirror: mirror,
+        query: "math",
+        count: 10
+      }
+
+      const optionsForIdsCase = {
+        mirror: mirror,
+        ids: "",
+        count: 10
+      }
+      
+      try {
+        const data1 = await search(optionsForQueryCase)
+        optionsForIdsCase.ids = data1.map(item => item.id)
+        const data2 = await search(optionsForIdsCase)
+        assert.deepStrictEqual(data1, data2)
+      } catch (error) {
+        assert(false)
+      }
+    })
+
+    it('should return exactly the same 10 JSON objects by id either by usaing an array or string', async () => {
+      const optionsForArrayCase = {
+        mirror: mirror,
+        ids: ["86", "430"],
+      }
+
+      const optionsForStringCase = {
+        mirror: mirror,
+        ids: "86,430",
+      }
+      
+      try {
+        const data1 = await search(optionsForArrayCase)
+        const data2 = await search(optionsForStringCase)
+        assert.deepStrictEqual(data1, data2)
+      } catch (error) {
+        assert(false)
+      }
+    })
+
+    it('should return exactly 1 item by ids either by using an array or string', async () => {
+      const optionsForArrayCase = {
+        mirror: mirror,
+        ids: ["86"],
+      }
+
+      const optionsForStringCase = {
+        mirror: mirror,
+        ids: "86",
+      }
+      
+      try {
+        const data1 = await search(optionsForArrayCase)
+        const data2 = await search(optionsForStringCase)
+        assert.strictEqual(data1.length, 1)
+        assert.strictEqual(data2.length, 1)
+      } catch (error) {
+        assert(false)
+      }
+    })
   })
 })
