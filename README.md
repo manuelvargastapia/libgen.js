@@ -4,20 +4,20 @@
 **Table of Contents**
 
 - [`libgen`](#libgen)
-    - [installation](#installation)
-    - [first, a warning](#first-a-warning)
-    - [usage: choosing a mirror](#usage-choosing-a-mirror)
-    - [usage: searching](#usage-searching)
-    - [usage: latest upload](#usage-latest-upload)
-    - [usage: random texts](#usage-random-texts)
-    - [usage: utilities](#usage-utilities)
-        - [check.hasField (synchronous)](#checkhasfield-synchronous)
-        - [check.canDownload (asynchronous)](#checkcandownload-asynchronous)
-        - [clean.forFields (synchronous)](#cleanforfields-synchronous)
-        - [clean.dups (synchronous)](#cleandups-synchronous)
+  - [installation](#installation)
+  - [first, a warning](#first-a-warning)
+  - [usage: choosing a mirror](#usage-choosing-a-mirror)
+  - [usage: searching](#usage-searching)
+  - [usage: latest upload](#usage-latest-upload)
+  - [usage: random texts](#usage-random-texts)
+  - [usage: utilities](#usage-utilities)
+    - [check.hasField (synchronous)](#checkhasfield-synchronous)
+    - [check.canDownload (asynchronous)](#checkcandownload-asynchronous)
+    - [clean.forFields (synchronous)](#cleanforfields-synchronous)
+    - [clean.dups (synchronous)](#cleandups-synchronous)
 - [other platforms](#other-platforms)
-    - [library](#library)
-    - [cli](#cli)
+  - [library](#library)
+  - [cli](#cli)
 
 <!-- markdown-toc end -->
 
@@ -52,7 +52,7 @@ good as well.
 ## usage: choosing a mirror
 
 This method tests the mirrors in `available_mirrors.js` (currently
-`http://libgen.is` and `http://gen.lib.rus.ec`) and returns the one
+`http://libgen.rs` and `http://gen.lib.rus.ec`) and returns the one
 that is fastest.
 
 ```js
@@ -146,12 +146,12 @@ This method requires a URL string—one of the mirrors in
 ```js
 (async () => {
   try {
-    const text = await libgen.latest.text('http://libgen.is')
+    const text = await libgen.latest.text('http://libgen.rs')
     console.log('Last text uploaded to Library Genesis')
     console.log('Title: ' + text.title)
     console.log('Author: ' + text.author)
     console.log('Download: ' +
-                'http://libgen.is/book/index.php?md5=' +
+                'http://libgen.rs/book/index.php?md5=' +
                 text.md5.toLowerCase())
     return true
   } catch(err) {
@@ -185,7 +185,7 @@ Put the options in an object, and pass it to `libgen.random.text`:
 ```js
 (async () => {
   const options = {
-    mirror: "http://libgen.is",
+    mirror: "http://libgen.rs",
     count: 5,
     fields: [
       "Title",

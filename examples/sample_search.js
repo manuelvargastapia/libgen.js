@@ -2,7 +2,7 @@ const libgen = require('../index.js');
 
 (async () => {
   const options = {
-    mirror: 'http://libgen.is',
+    mirror: 'http://libgen.rs',
     query: 'philosophy of religion',
     count: 5
   }

@@ -4,7 +4,7 @@ module.exports = [
     canDownloadDirect: false
   },
   {
-    baseUrl: "http://libgen.is",
+    baseUrl: "http://libgen.rs",
     // if true, '/get.php?md5=' works
     canDownloadDirect: true
   }
