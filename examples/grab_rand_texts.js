@@ -3,7 +3,7 @@ const libgen = require('../index.js');
 (async () => {
   const opts = {
     count: 10,
-    mirror: 'http://libgen.rs'
+    mirror: 'http://libgen.is'
   }
 
   try {

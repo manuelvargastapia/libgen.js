@@ -52,7 +52,7 @@ good as well.
 ## usage: choosing a mirror
 
 This method tests the mirrors in `available_mirrors.js` (currently
-`http://libgen.rs` and `http://gen.lib.rus.ec`) and returns the one
+`http://libgen.is` and `http://gen.lib.rus.ec`) and returns the one
 that is fastest.
 
 ```js
@@ -146,12 +146,12 @@ This method requires a URL string—one of the mirrors in
 ```js
 (async () => {
   try {
-    const text = await libgen.latest.text('http://libgen.rs')
+    const text = await libgen.latest.text('http://libgen.is')
     console.log('Last text uploaded to Library Genesis')
     console.log('Title: ' + text.title)
     console.log('Author: ' + text.author)
     console.log('Download: ' +
-                'http://libgen.rs/book/index.php?md5=' +
+                'http://libgen.is/book/index.php?md5=' +
                 text.md5.toLowerCase())
     return true
   } catch(err) {
@@ -185,7 +185,7 @@ Put the options in an object, and pass it to `libgen.random.text`:
 ```js
 (async () => {
   const options = {
-    mirror: "http://libgen.rs",
+    mirror: "http://libgen.is",
     count: 5,
     fields: [
       "Title",

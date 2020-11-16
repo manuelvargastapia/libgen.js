@@ -2,7 +2,7 @@ const libgen = require('../index.js');
 
 (async () => {
   const options = {
-    mirror: 'http://libgen.rs',
+    mirror: 'http://libgen.is',
     ids: '430,86' // could also be ["430", "86"]
   }
 

@@ -2,7 +2,7 @@ const libgen = require("../index.js");
 
 (async () => {
   const options = {
-    mirror: "http://libgen.rs",
+    mirror: "http://libgen.is",
     query: "modal logic",
     count: 5,
     fields: "title,author,md5" // could also be ["title", "author", "md5"]
