@@ -122,7 +122,7 @@ describe("async queries", () => {
 
       try {
         const data = await search(options)
-        assert.equal(data.length, 30)
+        assert.equal(data.results.length, 30)
       } catch (err) {
         assert(false)
       }
@@ -137,7 +137,7 @@ describe("async queries", () => {
 
       try {
         const data = await search(options)
-        assert.equal(data.length, 10)
+        assert.equal(data.results.length, 10)
       } catch (err) {
         assert(false)
       }
@@ -153,7 +153,7 @@ describe("async queries", () => {
 
       try {
         const data = await search(options)
-        assert.equal(data.length, 10)
+        assert.equal(data.results.length, 10)
       } catch (err) {
         assert(false)
       }
@@ -178,13 +178,13 @@ describe("async queries", () => {
         const data_offset = await search(options_offset)
         const data_basic = await search(options_basic)
 
-        const data_basic_offset = data_basic.slice(options_offset.offset)
+        const data_basic_offset = data_basic.results.slice(options_offset.offset)
 
         const data_basic_ids = data_basic_offset.map((value) => {
           return value.id
         })
 
-        const data_offset_ids = data_offset.map((value) => {
+        const data_offset_ids = data_offset.results.map((value) => {
           return value.id
         })
 
@@ -212,11 +212,11 @@ describe("async queries", () => {
 
       try {
         const data1 = await search(optionsForArrayCase)
-        const keys1 = Object.keys(data1[0]);
+        const keys1 = Object.keys(data1.results[0]);
         assert.strictEqual(keys1.toString(), optionsForArrayCase.fields.toString())
 
         const data2 = await search(optionsForStringCase)
-        const keys2 = Object.keys(data2[0]);
+        const keys2 = Object.keys(data2.results[0]);
         assert.strictEqual(keys2.toString(), optionsForStringCase.fields)
       } catch (error) {
         assert(false)
@@ -238,9 +238,9 @@ describe("async queries", () => {
       
       try {
         const data1 = await search(optionsForQueryCase)
-        optionsForIdsCase.ids = data1.map(item => item.id)
+        optionsForIdsCase.ids = data1.results.map(item => item.id)
         const data2 = await search(optionsForIdsCase)
-        assert.deepStrictEqual(data1, data2)
+        assert.deepStrictEqual(data1.results, data2.results)
       } catch (error) {
         assert(false)
       }
@@ -260,7 +260,7 @@ describe("async queries", () => {
       try {
         const data1 = await search(optionsForArrayCase)
         const data2 = await search(optionsForStringCase)
-        assert.deepStrictEqual(data1, data2)
+        assert.deepStrictEqual(data1.results, data2.results)
       } catch (error) {
         assert(false)
       }
@@ -280,8 +280,8 @@ describe("async queries", () => {
       try {
         const data1 = await search(optionsForArrayCase)
         const data2 = await search(optionsForStringCase)
-        assert.strictEqual(data1.length, 1)
-        assert.strictEqual(data2.length, 1)
+        assert.strictEqual(data1.results.length, 1)
+        assert.strictEqual(data2.results.length, 1)
       } catch (error) {
         assert(false)
       }

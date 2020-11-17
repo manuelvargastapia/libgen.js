@@ -8,16 +8,16 @@ const libgen = require('../index.js');
 
   try {
     const data = await libgen.search(options)
-    let n = data.length;
+    let n = data.results.length;
     console.log('top ' + n + ' results for "' +
                 options.query + '"' + ' seaching by ids ' + options.ids.toString());
     while (n--){
       console.log('***********');
-      console.log('Title: ' + data[n].title);
-      console.log('Author: ' + data[n].author);
+      console.log('Title: ' + data.results[n].title);
+      console.log('Author: ' + data.results[n].author);
       console.log('Download: ' +
                   'http://gen.lib.rus.ec/book/index.php?md5=' +
-                  data[n].md5.toLowerCase());
+                  data.results[n].md5.toLowerCase());
     }
     return true
   } catch (err) {
