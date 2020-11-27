@@ -286,5 +286,21 @@ describe("async queries", () => {
         assert(false)
       }
     })
+
+    it('should return an empty array as result and count equals to 0', async () => {
+      const options = {
+        mirror: mirror,
+        query: 'asdasdasd'
+      }
+
+      try {
+        const data = await search(options);
+        console.log(data);
+        assert.strictEqual(data.results.length, 0);
+        assert.strictEqual(data.count, 0);
+      } catch (error) {
+        assert(false);
+      }
+    })
   })
 })
