@@ -11,6 +11,7 @@ const hasField = require("../../lib/check.js")
 const latest = require("../../lib/latest.js")
 const random = require("../../lib/random.js")
 const search = require("../../lib/search.js")
+const searchInFiction = require("../../lib/search_in_fiction");
 
 // get a working mirror and use that for the rest of the tests
 let mirror
@@ -295,9 +296,182 @@ describe("async queries", () => {
 
       try {
         const data = await search(options);
-        console.log(data);
         assert.strictEqual(data.results.length, 0);
         assert.strictEqual(data.count, 0);
+      } catch (error) {
+        assert(false);
+      }
+    })
+  })
+
+  describe("search in fiction", () => {
+    it("should return an array of 30 JSON objects", async () => {
+      const options = {
+        mirror,
+        query: "dragon",
+        count: 30,
+        searchIn: "title",
+      };
+
+      try {
+        const data = await searchInFiction(options)
+        assert.equal(data.results.length, 30)
+      } catch (err) {
+        assert(false)
+      }
+    })
+
+    it("should return an array of 10 JSON objects", async () => {
+      const options = {
+        mirror: mirror,
+        query: "math",
+        count: 0
+      }
+
+      try {
+        const data = await searchInFiction(options)
+        assert.equal(data.results.length, 10)
+      } catch (err) {
+        assert(false)
+      }
+    })
+
+    it("should return an array of 10 JSON objects with an offset of 10", async () => {
+      const options = {
+        mirror: mirror,
+        query: "math",
+        count: 10,
+        offset: 10
+      }
+
+      try {
+        const data = await searchInFiction(options)
+        assert.equal(data.results.length, 10)
+      } catch (err) {
+        assert(false)
+      }
+    })
+
+    it("should contain 35 offset JSON objects that are in a basic search of 70", async () => {
+
+      const options_offset = {
+        mirror: mirror,
+        query: "math",
+        count: 35,
+        offset: 35
+      }
+
+      const options_basic = {
+        mirror: mirror,
+        query: "math",
+        count: 70
+      }
+
+      try {
+        const data_offset = await searchInFiction(options_offset)
+        const data_basic = await searchInFiction(options_basic)
+
+        const data_basic_offset = data_basic.results.slice(options_offset.offset)
+
+        const data_basic_ids = data_basic_offset.map((value) => {
+          return value.id
+        })
+
+        const data_offset_ids = data_offset.results.map((value) => {
+          return value.id
+        })
+
+        assert.deepStrictEqual(data_offset_ids, data_basic_ids)
+
+      } catch (err) {
+        assert(false)
+      }
+    })
+
+    it('should return an empty array as result and count equals to 0', async () => {
+      const options = {
+        mirror: mirror,
+        query: 'asdasdasd'
+      }
+
+      try {
+        const data = await searchInFiction(options);
+        assert.strictEqual(data.results.length, 0);
+        assert.strictEqual(data.totalCount, 0);
+      } catch (error) {
+        assert(false);
+      }
+    })
+
+    it('should return an array with 50 results where extension is PDF', async () => {
+      const options = {
+        mirror,
+        query: 'dragon',
+        extension: "pdf",
+        count: 50,
+      }
+
+      try {
+        const data = await searchInFiction(options);
+        data.results.forEach((result) => {
+          assert.equal(result.format, "PDF");
+        })
+      } catch (error) {
+        assert(false);
+      }
+    })
+
+    it('should return an array with 50 results where extension is EPUB', async () => {
+      const options = {
+        mirror,
+        query: 'dragon',
+        extension: "epub",
+        count: 50,
+      }
+
+      try {
+        const data = await searchInFiction(options);
+        data.results.forEach((result) => {
+          assert.equal(result.format, "EPUB");
+        })
+      } catch (error) {
+        assert(false);
+      }
+    })
+
+    it('should return an array with 50 results where language is English', async () => {
+      const options = {
+        mirror,
+        query: 'dragon',
+        language: "en",
+        count: 50,
+      }
+
+      try {
+        const data = await searchInFiction(options);
+        data.results.forEach((result) => {
+          assert.equal(result.language, "English");
+        })
+      } catch (error) {
+        assert(false);
+      }
+    })
+
+    it('should return an array with 50 results where language is Spanish and format is EPUB', async () => {
+      const options = {
+        mirror,
+        query: '',
+        language: "es",
+        extension: "mobi",
+        count: 50,
+      }
+
+      try {
+        const data = await searchInFiction(options);
+        data.results.forEach((result) => {
+          assert.equal(result.language, "Spanish");
+          assert.equal(result.format, "MOBI");
+        })
       } catch (error) {
         assert(false);
       }
