@@ -19,6 +19,7 @@
     "url": "https://github.com/dunn/libgen.js.git"
   },
   "dependencies": {
+    "cheerio": "1.0.0-rc.5",
     "got": "11.3.x",
     "request": "2.88.2",
     "request-promise": "4.2.6",
